@@ -9,6 +9,6 @@
   },
   "license": "MIT",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node --inspect --trace-warnings src/index.js"
   }
 }

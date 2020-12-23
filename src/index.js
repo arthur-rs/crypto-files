@@ -1,8 +1,6 @@
 const menu = require('./layouts/menu')
 
-const app = async () => {
-  console.clear()
-  
+const app = async () => {  
   while (true){
     const result = await menu()
 
@@ -11,4 +9,3 @@ const app = async () => {
 }
 
 app()
-

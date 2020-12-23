@@ -40,7 +40,7 @@ const encrypt = async (path, key, iv) => {
   line()
   console.timeEnd('encrypting')
   print(`Total of ${files.length} encrypted files`)
-  print()
+  print('')
   print(`Thank you for using!`)
   print('Created by: Arthur Reis')
   print('Email: arthurreis074@gmail.com')

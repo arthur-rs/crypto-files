@@ -1,10 +1,22 @@
-const { readdir } = require('fs/promises')
-const { extname, join, resolve } = require('path')
+const { readdir, stat } = require('fs/promises')
+const { join, resolve } = require('path')
 
 const getAllFiles = async (path) => {
   const read = await readdir(path)
-  const files = read.filter((file) => extname(file))
-  const directories = read.filter((file) => !extname(file))
+  
+  const files = []
+
+  const directories = []
+
+  for (const file of read) {
+    const fileStatus = await stat(join(path, file))
+   
+    if(fileStatus.isDirectory()){
+      directories.push(file)
+    } else {
+      files.push(file)
+    }
+  }
 
   const filesInDirectories = []
 

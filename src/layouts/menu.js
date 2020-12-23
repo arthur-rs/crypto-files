@@ -1,8 +1,9 @@
-const { list, print, input, centerText } = require('../utils/stdio')
+const { list, print, input } = require('../utils/stdio')
 const handleSelect = require('../handlers/handleSelect')
 
 const menu = async () => {
-
+  console.clear()
+  
   const options = ['Encrypt directory', 'Decrypt directory', 'Close']
 
   const optionSelected = Number(await list(options, 'Crypto Files v1.0 '))

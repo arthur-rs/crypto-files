@@ -42,7 +42,7 @@ const decrypt = async (path, key, iv) => {
   line()
   console.timeEnd('decrypting')
   print(`Total of ${files.length} decrypted files`)
-  print()
+  print('')
   print(`Thank you for using!`)
   print('Created by: Arthur Reis')
   print('Email: arthurreis074@gmail.com')

@@ -18,51 +18,65 @@ const CheckDir = async (path) => {
 
 const handleSelect = async (type) => {
  
+  console.clear()
+
+  line()
+  centerText(type.charAt(0).toUpperCase() + type.slice(1))
+  line()
+
+  let path
+  let autoGenerateKey = false
+  let key
+
   while(true){
-    console.clear()
+    path = await input('Select the directory: ')
+  
+    const existDir = await CheckDir(path)
 
-    line()
-    centerText(type.charAt(0).toUpperCase() + type.slice(1))
-    line()
-
-    const path = await input('Select the directory: ')
+    if(existDir) break
     
-    const existDir = CheckDir(path)
-
-    if(!existDir) print('Invalid Directory, try again!')
-
-    let autoGenerateKey = false
-    let key
-
-    if(type === 'encrypt')
-      autoGenerateKey = await trueOrFalse('Generate key automatically? <Y/n>: ', true)
-    
-
-    if(autoGenerateKey){
-      key = randomBytes(32).toString('base64')
-    } else {
-      key = await input('Select the key ')
-    }
-    
-    const bytesKey = Buffer.alloc(32, key)
-    const bytesIv = Buffer.alloc(16, key)  
-    
-    line()
-
-    const run = await trueOrFalse('Do you really want to continue? <Y/n>: ', true)
-    
-    if(!run) menu()
-    if(autoGenerateKey) print(`\nKey: ${bytesKey.toString()}\n`)
-
-    if(type === 'encrypt'){
-      await encrypt(path, bytesKey, bytesIv)
-    } else {
-      await decrypt(path, bytesKey, bytesIv)
-    }
-
-    if(autoGenerateKey) print(`\nKey: ${bytesKey.toString()}\n`)
-    
+    print('Invalid Directory, try again!')    
   }
+
+  if(type === 'encrypt')
+    autoGenerateKey = await trueOrFalse('Generate key automatically? <Y/n>: ', true)
+  
+  if(autoGenerateKey){
+    key = randomBytes(32).toString('base64')
+  } else {
+
+    while(true){
+      key = await input('Select the key: ')
+
+      if(key) break
+
+      print('You need to enter a key, try again')
+    }
+  }
+  
+  const bytesKey = Buffer.alloc(32, key)
+  const bytesIv = Buffer.alloc(16, key)  
+  
+  if(autoGenerateKey) print(`\nKey: ${bytesKey.toString()}\n`)
+
+  line()
+
+  const run = await trueOrFalse('Do you really want to continue? <Y/n>: ', true)
+  
+  if(!run) return menu()
+
+  if(type === 'encrypt'){
+    await encrypt(path, bytesKey, bytesIv)
+  } else {
+    await decrypt(path, bytesKey, bytesIv)
+  }
+
+  if(autoGenerateKey){
+    print(`\nKey: ${bytesKey.toString()}\n`) 
+    line()
+  } 
+
+  await input('<- Press any key to continue ->')
 }
 
 module.exports = handleSelect
