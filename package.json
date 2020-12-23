@@ -1,6 +1,14 @@
 {
   "name": "crypto-files",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "main": "src/index.js",
+  "author": {
+    "name": "Arthur Reis",
+    "url": "https://github.com/Arthur-Rs",
+    "email": "arthurreis074@gail.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js"
+  }
 }
